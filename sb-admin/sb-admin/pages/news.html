@@ -48,7 +48,7 @@
 
     <div class="popup" data-popup="popup-1">
         <div class="popup-inner">
-            <h2 id="createEditNews">create a news</h2>
+            <h2>create a news</h2>
             <div>
                 <form role="form">
                     <div class="form-group">
@@ -71,17 +71,13 @@
                     <!--<button  onclick="createNews()" >Submit Button</button>-->
                     <button type="reset" class="btn btn-default">Reset Button</button>
                 </form>
-                <button id="submit_news" type="submit" onclick="createNews()" class="btn btn-default">Submit Button</button>
-                <br>
-                <button id="edit_news" type="submit" onclick="editNews()" class="btn btn-default">update Button</button>
+                <button type="submit" onclick="createNews()" class="btn btn-default">Submit Button</button>
 
             </div>
             <!--<p><a data-popup-close="popup-1" href="#">Close</a></p>-->
             <a class="popup-close" data-popup-close="popup-1" href="#">x</a>
         </div>
     </div>
-
-
 
 
 
@@ -121,27 +117,21 @@
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
 
-                        <ul class="nav" id="side-menu">
-            <li>
-                <a href="news.html"><i class="fa fa-file"></i> News </a>
-            </li>
-            <li>
-                <a href="albums.html"><i class="fa fa-picture-o"></i> albums</a>
-            </li>
-            <li>
-                <a href="class_list.html"><i class="fa fa-users"></i> class list</a>
-            </li>
-            <li>
-                <a href="feedback.html"><i class="fa fa-envelope"></i> feedback list</a>
-            </li>
-            <li>
-                <a href="notification.html"><i class="fa fa-bell"></i> Notifications</a>
-            </li>
-            <li>
-                <a href="importData.html"><i class="fa fa-database"></i> import/export data</a>
-            </li>
+                    <ul class="nav" id="side-menu">
+                        <li>
+                            <a href="news.html"><i class="fa fa-table fa-fw"></i> News </a>
+                        </li>
+                        <li>
+                            <a href="class_list.html"><i class="fa fa-table fa-fw"></i> class list</a>
+                        </li>
+                        <li>
+                            <a href="feedback.html"><i class="fa fa-table fa-fw"></i> feedback list</a>
+                        </li>
+                        <li>
+                            <a href="importData.html"><i class="fa fa-table fa-fw"></i> import/export data</a>
+                        </li>
 
-        </ul>
+                    </ul>
 
                 </div>
                 <!-- /.sidebar-collapse -->
@@ -166,7 +156,7 @@
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row the class list table -->
-            <div class="row" id="table-scroll" style="overflow:scroll; height:700px;">
+            <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -183,7 +173,6 @@
                                         <td>cover</td>
                                         <td>post date</td>
                                         <th>delete </th>
-                                        <th>edit </th>
                                     </tr>
                                 </thead>
 
@@ -196,26 +185,14 @@
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
 
-            <div id="footer">
-              
-                <div id="footernotes">
-                </div>
-            </div>
-            <!-- end #footer -->
+
+
 
         </div>
         <!-- /#page-wrapper -->
 
     </div>
-
-    
     <!-- /#wrapper -->
 
     <!-- jQuery -->
@@ -242,7 +219,6 @@
     <script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.print.min.js"></script>
 
 
-    <!--<script src="https://editor.datatables.net/extensions/Editor/js/dataTables.editor.min.js"></script>-->
     <!--add a button inside the data table-->
     <script src="https://cdn.datatables.net/buttons/1.2.4/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.flash.min.js"></script>

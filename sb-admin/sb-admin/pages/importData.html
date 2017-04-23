@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>YWCA CMS</title>
+    <title>SB Admin 2 - Bootstrap Admin Theme</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -44,11 +44,11 @@
 
 
 
-    <a id="dummy" class="btn" data-popup-open="popup-1" href="#">Open Popup #1</a>
+    <!--<a id="dummy" class="btn" data-popup-open="popup-1" href="#">Open Popup #1</a>-->
 
     <div class="popup" data-popup="popup-1">
         <div class="popup-inner">
-            <h2 id="createEditNews">create a news</h2>
+            <h2>create a news</h2>
             <div>
                 <form role="form">
                     <div class="form-group">
@@ -71,17 +71,13 @@
                     <!--<button  onclick="createNews()" >Submit Button</button>-->
                     <button type="reset" class="btn btn-default">Reset Button</button>
                 </form>
-                <button id="submit_news" type="submit" onclick="createNews()" class="btn btn-default">Submit Button</button>
-                <br>
-                <button id="edit_news" type="submit" onclick="editNews()" class="btn btn-default">update Button</button>
+                <button type="submit" onclick="createNews()" class="btn btn-default">Submit Button</button>
 
             </div>
             <!--<p><a data-popup-close="popup-1" href="#">Close</a></p>-->
             <a class="popup-close" data-popup-close="popup-1" href="#">x</a>
         </div>
     </div>
-
-
 
 
 
@@ -97,55 +93,40 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
+
                 <a class="navbar-brand" href="news.html">YWCA CMS</a>
+
             </div>
             <!-- /.navbar-header -->
 
             <ul class="nav navbar-top-links navbar-right">
-                <!-- /.dropdown -->
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                        </li>
-                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                        </li>
-                    </ul>
-                </li>
+                <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
             </ul>
+
+
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
 
-                        <ul class="nav" id="side-menu">
-            <li>
-                <a href="news.html"><i class="fa fa-file"></i> News </a>
-            </li>
-            <li>
-                <a href="albums.html"><i class="fa fa-picture-o"></i> albums</a>
-            </li>
-            <li>
-                <a href="class_list.html"><i class="fa fa-users"></i> class list</a>
-            </li>
-            <li>
-                <a href="feedback.html"><i class="fa fa-envelope"></i> feedback list</a>
-            </li>
-            <li>
-                <a href="notification.html"><i class="fa fa-bell"></i> Notifications</a>
-            </li>
-            <li>
-                <a href="importData.html"><i class="fa fa-database"></i> import/export data</a>
-            </li>
+                    <ul class="nav" id="side-menu">
+                        <li>
+                            <a href="news.html"><i class="fa fa-table fa-fw"></i> News </a>
+                        </li>
+                        <li>
+                            <a href="class_list.html"><i class="fa fa-table fa-fw"></i> class list</a>
+                        </li>
+                        <li>
+                            <a href="feedback.html"><i class="fa fa-table fa-fw"></i> feedback list</a>
+                        </li>
+                        <li>
+                            <a href="importData.html"><i class="fa fa-table fa-fw"></i> import/export data</a>
+                        </li>
 
-        </ul>
+                    </ul>
 
                 </div>
                 <!-- /.sidebar-collapse -->
             </div>
+
             <!-- /.navbar-static-side -->
         </nav>
 
@@ -161,61 +142,32 @@
 
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">News</h1>
+                    <h1 class="page-header">import/export data</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row the class list table -->
-            <div class="row" id="table-scroll" style="overflow:scroll; height:700px;">
-                <div class="col-lg-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            news table
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <table width="100%" class="table table-striped table-bordered table-hover" cellspacing="0" id="table_news">
-                                <thead>
-                                    <tr>
-                                        <td>news id</td>
-                                        <td>tile</td>
-                                        <td>content</td>
-                                        <td>cover</td>
-                                        <td>post date</td>
-                                        <th>delete </th>
-                                        <th>edit </th>
-                                    </tr>
-                                </thead>
 
-
-                            </table>
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->
-                </div>
-                <!-- /.col-lg-12 -->
+            <div>import excel
+                <td><input id="upload_news_image" type="file" onchange="previewFile()"></td>
             </div>
             <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
 
-            <div id="footer">
-              
-                <div id="footernotes">
-                </div>
+            <div>
+                <button type="button" class="btn btn-default">import</button>
             </div>
-            <!-- end #footer -->
+
+            <br>
+            <div>
+                <button type="button" class="btn btn-default">export</button>
+            </div>
+
+
 
         </div>
         <!-- /#page-wrapper -->
 
     </div>
-
-    
     <!-- /#wrapper -->
 
     <!-- jQuery -->
@@ -235,17 +187,16 @@
 
     <script src="https://cdn.datatables.net/1.10.13/js/dataTables.jqueryui.min.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
-    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.24/build/pdfmake.min.js"></script>
-    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.24/build/vfs_fonts.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.print.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>//
+    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.24/build/pdfmake.min.js"></script>//
+    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.24/build/vfs_fonts.js"></script>//
+    <script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.html5.min.js"></script>//
+    <script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.print.min.js"></script>//
 
 
-    <!--<script src="https://editor.datatables.net/extensions/Editor/js/dataTables.editor.min.js"></script>-->
     <!--add a button inside the data table-->
     <script src="https://cdn.datatables.net/buttons/1.2.4/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.flash.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.flash.min.js"></script>//
 
     <script src="../vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
     <script src="../vendor/datatables-responsive/dataTables.responsive.js"></script>
@@ -298,7 +249,7 @@
     <!--<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>-->
 
     <script src="../js/myFunction.js"></script>
-    <script src="../js/news.js"></script>
+    <script src="../js/feedback.js"></script>
 
 
 </body>
