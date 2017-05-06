@@ -36,10 +36,11 @@ $(document).ready(function () {
 
 var feedbackTable = $('#table_feedback').DataTable({
     responsive: true,
-    "autoWidth": false,
-    scrollCollapse: true,
-    dom: 'Blfrtip',
-    buttons: ['csv', 'excel'],
+    //"autoWidth": false,
+    //scrollCollapse: true,
+    //dom: 'Blfrtip',
+    //buttons: ['csv', 'excel'],
+    
 });
 
 var rootRef = firebase.database().ref();

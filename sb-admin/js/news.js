@@ -58,24 +58,7 @@ $(document).ready(function () {
     newsTable.column(0).visible(false);
 });
 
-// var reference;
-// var editRowData;
 
-// function setUpdateNews(data) {
-
-//     if (reference != null) {
-//         newsTable.row($(reference).parents('tr')).data(newData).draw();
-//     }
-
-// }
-
-// var calcDataTableHeight = function () {
-//     return $(window).height() * 55 / 100;
-// };
-
-// var oTable = $('#reqAllRequestsTable').dataTable({
-//     "sScrollY": calcDataTableHeight()
-// });
 
 
 
@@ -99,20 +82,6 @@ var newsTable = $('#table_news').DataTable({
             addNews();
         }
     }],
-
-    // buttons: [{
-    //         extend: "create",
-    //         editor: editor
-    //     },
-    //     {
-    //         extend: "edit",
-    //         editor: editor
-    //     },
-    //     {
-    //         extend: "remove",
-    //         editor: editor
-    //     }
-    // ],
 
     colReorder: true,
 });
@@ -181,30 +150,19 @@ var newsRef = firebase.database().ref().child("News");
 var news_list = [];
 
 newsRef.on("child_added", snap => {
-    console.log("newsRef on ");
-
-
-
     var itermId = snap.key;
     var title = snap.child("title").val();
     var content = snap.child("content").val();
-    var storageRefChild = snap.child("storageRefChild").val();
     var timestamp = snap.child("timestamp").val();
-    var tangRef = storageRef.child(storageRefChild);
     var image_real_url;
 
-
+    var storageRefChild = snap.child("storageRefChild").val();   
+    var tangRef = storageRef.child(storageRefChild);   
     tangRef.getDownloadURL().then(function (url) {
         image_real_url = url;
         var imageTag = '<img src="' + image_real_url + '" width="100">';
-        newsTable.row.add([
-            itermId,
-            title,
-            content,
-            imageTag,
-            timeConverter(timestamp),
-            removeButtonTag,
-            editButtionTag
+
+        newsTable.row.add([itermId,title,content,imageTag,timeConverter(timestamp),removeButtonTag,editButtionTag
         ]).draw(false);
 
 

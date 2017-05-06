@@ -44,10 +44,12 @@ function display_all_courses(index) {
                 courseTable.row.add([
                     course_id,
                     course_list[i].name,
-                    course_list[i].startdate,
-                    course_list[i].endDate,
+                    timeConverter(course_list[i].startdate),
+                    timeConverter(course_list[i].endDate),
                     course_list[i].totalLessons,
-                    course_list[i].totalStudents
+                    course_list[i].totalStudents,
+                    removeButtonTag
+
                 ]).draw(false);
 
 
@@ -141,7 +143,9 @@ function add_student_table(userId, student_attend_list) {
                 student_name,
                 Courses_list,
                 counter,
-                imageTag
+                imageTag,
+                removeButtonTag,
+                editButtionTag
                 // totalLessons,
                 // totalStudents,
                 // buttonTag

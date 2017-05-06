@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -11,22 +11,11 @@
 
     <title>YWCA CMS</title>
 
-    <!-- Bootstrap Core CSS -->
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- MetisMenu CSS -->
     <link href="../vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
-
-    <!-- DataTables CSS -->
     <link href="../vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
-
-    <!-- DataTables Responsive CSS -->
     <link href="../vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
     <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
-
-    <!-- Custom Fonts -->
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -70,6 +59,9 @@
                 <a href="news.html"><i class="fa fa-file"></i> News </a>
             </li>
             <li>
+                <a href="attendence.html"><i class="fa fa-user"></i> Users </a>
+            </li>
+            <li>
                 <a href="albums.html"><i class="fa fa-picture-o"></i> albums</a>
             </li>
             <li>
@@ -102,9 +94,12 @@
             <!-- /.row the class list table -->
             <div class="row">
                 <div class="col-lg-12">
+                    <div>
+                        <button id="add_albums" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#addNewsModal">Add course</button>
+                    </div><br>
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            courses table
+                            Courses table
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -119,7 +114,10 @@
                                         <th>total lessons </th>
                                         <th>total students </th>
                                         <th>view detail </th>
-                                        <th><input id = "filterStudents"type="text" class="form-control" placeholder="filter value"> </th>
+                                        <th>filter option</th>
+                                        <th>delete </th>
+                                        <th>edit </th>
+                                        
 
 
                                     </tr>
@@ -141,6 +139,7 @@
             <!-- /.row  student table from that class-->
             <div class="row">
                 <div class="col-lg-12">
+                  
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <!--student table-->

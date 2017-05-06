@@ -27,18 +27,24 @@ $(document).ready(function () {
         var index = courseTable.row($(this).parents('tr')).index();
         // console.log("data index " + data.index);
         // show_student(index);
+                     //alert("index " + index);
 
         // studentTableTitle.text("student in " + data[1]);
         // alert("filter!");
         console.log("$('#filterStudents').val():  " + $('#filterStudents').val());
-        if ($('#filterStudents').val() != "") {
-            // alert("index " + index);
+        if ($('#filterValue').val() != "" && $('#filterValue').val() != null) {
+            alert("filterValue " + $('#filterValue').val());
+
             filter_student_1($('#filterStudents').val(), index);
         } else {
+            filter_student_1(20, index);
+
             alert("filter value is empty!");
 
         }
     });
+
+ 
 
 
     courseTable.column(0).visible(false);
@@ -103,7 +109,9 @@ coursesRef.on("child_added", snap => {
             totalLessons + "0",
             totalStudents + "0",
             viewButtionTag,
-            filterButtionTag
+            filterButtionTag,
+            removeButtonTag,
+            editButtionTag
         ]).draw(false);
 
 
@@ -161,7 +169,7 @@ function filter_student_1(number, index) {
         var studentNID = "Student" + getRandomInt(100, 300) + "(MEM" + getRandomInt(100, 300) + ")";
         studentTable.row.add([
             studentNID, courseName,
-            getRandomInt(number, 30)
+            getRandomInt(number, 30)+"/30"
         ]).draw(false);
 
     }

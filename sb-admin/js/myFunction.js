@@ -1,10 +1,13 @@
 
 
 var removeButtonTag = ' <button id="removeBtn" type="button" class="btn btn-danger  btn-circle"><i class="fa fa-times"></i></button>';
-var viewButtionTag = '<button id="viewBtn" type="button" class="btn btn-info">View Detail</button>';
-var editButtionTag = '<button id="editBtn" type="button" class="btn btn-info">edit</button>';
-var filterButtionTag = '<button id="filterBtn" type="button" class="btn btn-info">filter</button>';
 
+var viewButtionTag = '<button id="viewBtn" type="button" class="btn btn-info">View Detail</button>';
+
+var editButtionTag = '<button id="editBtn" type="button" class="btn btn-info">edit</button>';
+var enrollButtionTag = '<button id="editBtn" type="button" class="btn btn-info">enroll</button>';
+var filterButtionTag = '<button id="filterBtn" type="button" class="btn btn-info">filter</button>';
+var inputFilterValueTag = '<input id = "filterValue" type="text" class="form-control" placeholder="attendance percentage"> ';
 function timeConverter(UNIX_timestamp) {
     var a = new Date(UNIX_timestamp * 1000);
     var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];

@@ -66,7 +66,10 @@ usersRef.on("child_added", snap => {
     attendanceTable.row.add([
         new_data.key,
         new_data.name,
-        viewButtionTag
+        viewButtionTag,
+        removeButtonTag,
+        editButtionTag,
+        enrollButtionTag
     ]).draw(false);
 
 
