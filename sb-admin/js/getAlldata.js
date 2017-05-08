@@ -2,6 +2,8 @@ console.log("getAllData.js begin");
 var coursesRef = firebase.database().ref().child("Courses");
 var usersRef = firebase.database().ref().child("Users");
 var attendancesRef = firebase.database().ref().child("Attendances");
+var albumsRef = firebase.database().ref().child("Album");
+
 var storage = firebase.storage();
 var storageRef = storage.ref();
 
@@ -62,14 +64,20 @@ usersRef.on("child_added", snap => {
     }
 
     user_list.push(new_data);
+    var editUserButtonTag = '<button id="editUserBtn" type="button" class="btn btn-info" data-toggle="modal" data-target="#editUserModal">Edit</button>';
+    var enrollButtionTag = '<button id="enrollBtn" type="button" class="btn btn-info"  data-toggle="modal" data-target="#enrollCoursesModal">Enroll</button>';
+    var viewButtionTag = '<button id="viewBtn" type="button" class="btn btn-info">View Detail</button>';
+    var removeButtonTag = ' <button id="removeBtn" type="button" class="btn btn-danger  btn-circle"><i class="fa fa-times"></i></button>';
 
     attendanceTable.row.add([
         new_data.key,
         new_data.name,
         viewButtionTag,
         removeButtonTag,
-        editButtionTag,
-        enrollButtionTag
+        editUserButtonTag,
+        enrollButtionTag,
+    
+
     ]).draw(false);
 
 
@@ -96,6 +104,36 @@ attendancesRef.on("child_added", snap => {
 
     counterData++;
 });
+
+
+
+
+
+
+
+var Album_list = [];
+albumsRef.on("child_added", snap => {
+    console.log("albumsRef on");
+    var coverageRef = snap.child("coverStorageRefChild").val();
+    var dataString = snap.child("dateString").val();
+    var name = snap.child("name").val();
+    var imgRef = snap.child("storageRefChilds").val();
+    console.log("name " + name);
+    console.log("imgRef " ,imgRef);
+
+    var new_data = {
+        "key": snap.key,
+        "students": students,
+        "name": name,
+        "startTime": startTime,
+        "endTime": endTime
+    }
+
+    Album_list.push(new_data);
+
+  
+});
+
 
 
 $(document).ready(function () {

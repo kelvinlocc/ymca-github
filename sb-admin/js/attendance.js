@@ -6,10 +6,13 @@ console.log("attendance.js begin!");
 // var storageRef = storage.ref();
 
 
+var onClickTableIndex;
+var onClickTableData;
+var removeButtonTag = ' <button id="DropCourseBtn" type="button" class="btn btn-danger  btn-circle"><i class="fa fa-times"></i></button>';
 
 $(document).ready(function () {
 
-    $('#attendance_table tbody').on('click', 'button', function () {
+    $('#attendance_table tbody').on('click', '#viewBtn', function () {
         var data = attendanceTable.row($(this).parents('tr')).data();
         // var index = $(this).index(this);
         var index = attendanceTable.row($(this).parents('tr')).index();
@@ -19,6 +22,92 @@ $(document).ready(function () {
         display_all_courses(index);
         // alert("index " + index + " " + data[1] + " " + data[5]);
     });
+
+    $('#attendance_table tbody').on('click', '#editUserBtn', function () {
+        var data = attendanceTable.row($(this).parents('tr')).data();
+        // var index = $(this).index(this);
+        var index = attendanceTable.row($(this).parents('tr')).index();
+        console.log("data index " + data.index);
+
+        courseTable.clear().draw();
+        display_all_courses(index);
+        $('#student_id_editForm').val(data[0]);
+        $('#student_name_editForm').val(data[1]);
+
+        //assign to gobal data
+        onClickTableIndex = index;
+        onClickTableData = data;
+        // alert("index " + index + " " + data[1] + " " + data[5]);
+    });
+
+    $("#updateUserBtn").click(function () {
+        //alert("Handler for updateUserBtn .click() called.");
+        if (onClickTableIndex != null && onClickTableData != null) {
+
+            var myNewUserData = onClickTableData;
+            myNewUserData[0] = $("#student_id_editForm").val();
+            myNewUserData[1] = $('#student_name_editForm').val();
+            //alert("$('#student_name_editForm').val()" + $('#student_name_editForm').val());
+            attendanceTable.row(onClickTableIndex).data(myNewUserData).draw();
+
+
+
+        } else {
+            alert("error on table index");
+        }
+    });
+
+    $('#attendance_table tbody').on('click', '#enrollBtn', function () {
+        var data = attendanceTable.row($(this).parents('tr')).data();
+        // var index = $(this).index(this);
+        var index = attendanceTable.row($(this).parents('tr')).index();
+        console.log("data[0]  " + data[0]);
+
+        //courseTable.clear().draw();
+        //$('#student_id_editForm2').val(data[0]);
+        $('#student_name_editForm2').val(data[1]);
+        display_all_courses(index);
+
+        //assign to gobal data
+        onClickTableIndex = index;
+        onClickTableData = data;
+        // alert("index " + index + " " + data[1] + " " + data[5]);
+    });
+
+    $("#EnrollCoursesBtn").click(function () {
+        //alert("Handler for updateUserBtn .click() called.");
+        if (onClickTableIndex != null && onClickTableData != null) {
+            $('#Crd option:selected').text();
+            var course_name = $('#Crd option:selected').text();
+            courseTable.row.add([
+                "EVENT123999",
+                $('#enroll_course_selection option:selected').text(),
+                "23 Mar 2017 8:0:0",
+                "24 Mar 2017 4:0:0",
+                "3",
+                "2",
+                removeButtonTag
+
+            ]).draw(false);
+
+        } else {
+            alert("error on table index");
+        }
+    });
+
+    $('#course_table tbody').on('click', '#DropCourseBtn', function () {
+        var data = courseTable.row($(this).parents('tr')).data();
+        // var index = $(this).index(this);
+        var index = courseTable.row($(this).parents('tr')).index();
+        console.log("data index " + data.index);
+
+        if (confirm("are you sure to drop '" + data[1] + "'?")) {
+            courseTable.row($(this).parents('tr')).remove().draw();
+        } else {
+            console.log("drop cancelled!");
+        }
+    });
+
 
 });
 var attendanceTable = $('#attendance_table').DataTable({
@@ -83,6 +172,7 @@ function show_student(index) {
 
 // var userId = firebase.auth().currentUser.uid;
 
+//this function no use, use get_all_data.js
 function add_student_table(userId, student_attend_list) {
     return firebase.database().ref('/Users/' + userId).once('value').then(function (snap) {
         // var username = snapshot.val().name;
@@ -129,13 +219,14 @@ function add_student_table(userId, student_attend_list) {
 
         var reward_condition = $("#reward_condition").val();
         console.log("reward_condition" + reward_condition);
-
         tangRef.getDownloadURL().then(function (url) {
             console.log("get image!");
             console.log("get image! url: " + url);
             image_real_url = url;
 
             var imageTag = '<img src="' + image_real_url + '" width="100">';
+            var testTag = '<button id="add_albums" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#addUserModal">Add User</button>';
+
             // var buttonTag = ' <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="viewBtn">view </button>';
 
             studentTable.row.add([
@@ -145,7 +236,8 @@ function add_student_table(userId, student_attend_list) {
                 counter,
                 imageTag,
                 removeButtonTag,
-                editButtionTag
+                editUserButtonTag,
+                
                 // totalLessons,
                 // totalStudents,
                 // buttonTag

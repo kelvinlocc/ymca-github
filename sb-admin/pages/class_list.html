@@ -95,7 +95,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div>
-                        <button id="add_albums" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#addNewsModal">Add course</button>
+                        <button id="add_albums" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#addCoursesModal">Add course</button>
                     </div><br>
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -181,6 +181,119 @@
 
     </div>
     <!-- /#wrapper -->
+
+    <!-- Modal for add Course-->
+    <div id="addCoursesModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add Course</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form role="form">
+                                <!--<div class="form-group">
+                                    <label>Student ID</label>
+                                    <input id="student_id_editForm2" class="form-control" placeholder="Enter text" readonly>
+                                </div>-->
+                                <div class="form-group">
+                                    <label>Course Name</label>
+                                    <input id="course_name_addCourse" class="form-control" placeholder="Enter text">
+                                </div>
+                                <div class="form-group">
+                                    <label>Start Date</label>
+                                    <input  type="date" id="start_date_addCourse" class="form-control" placeholder="Enter text">
+                                </div>
+                                <div class="form-group">
+                                    <label>End Date</label>
+                                    <input type="date" id="end_date_addCourse" class="form-control" placeholder="Enter text">
+                                </div>
+                                <div class="form-group">
+                                    <label>Upload Image</label>
+                                    <input type="file" id="course_image_file" class="form-control" placeholder="" onchange="previewFile()">
+                                    <br />
+                                    <img id="image_preview" width="100" src="../img/default.jpg">
+                                </div>
+                                <div class="form-group">
+                                    <label>Total Lessons</label>
+                                    <input id="totalL_addCourse" class="form-control" placeholder="Enter text">
+                                </div>
+                                <div class="form-group">
+                                    <label>Total Students</label>
+                                    <input type="number" id="totalS_addCourse" class="form-control" placeholder="Enter text">
+                                </div>
+
+                       
+
+                                <button id="addCourseBtn" data-dismiss="modal" class="btn btn-primary">Add</button>
+                                <button type="reset" class="btn btn-warning">Reset input fields</button>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Modal for Filter precentage-->
+    <div id="filterModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Please input filter precentage</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form role="form">
+                                <!--<div class="form-group">
+                                    <label>Student ID</label>
+                                    <input id="student_id_editForm2" class="form-control" placeholder="Enter text" readonly>
+                                </div>-->
+                                <div class="form-group">
+                                    <label>filter precentage</label>
+                                    <input type="number" id="course_name_addCourse" class="form-control" placeholder="Enter text">
+                                </div>
+                                Or
+                                <div class="form-group">
+                                    <label>Predefined Filter Rules</label>
+                                    <select id="filerRules">
+                                        <option value="1">Gold Prize</option>
+                                        <option value="2">silver Prize</option>bronze Prize
+                                        <option value="3">bronze Prize</option>
+                                    </select>
+                                </div>
+                             
+
+
+                                <button id="doFilterBtn" data-dismiss="modal" class="btn btn-primary">Confirm</button>
+                                <button type="reset" class="btn btn-warning">Reset input fields</button>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
 
     <!-- jQuery -->
     <script src="../vendor/jquery/jquery.min.js"></script>

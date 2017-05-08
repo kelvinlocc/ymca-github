@@ -4,6 +4,8 @@ var storage = firebase.storage();
 var storageRef = storage.ref();
 
 
+var GlobalTableIndexClick;
+var GlobalTableDataClick;
 
 $(document).ready(function () {
 
@@ -11,45 +13,88 @@ $(document).ready(function () {
         var data = courseTable.row($(this).parents('tr')).data();
         // var index = $(this).index(this);
         var index = courseTable.row($(this).parents('tr')).index();
-        console.log("data index " + data.index);
-        show_student(index);
+        console.log("data[1] " + data[1]);
+        //show_student(index);
 
         studentTableTitle.text("student in " + data[1]);
-        // alert("button!");
 
-        // alert("index " + index + " " + data[1] + " " + data[5]);
     });
 
     $('#dataTables-example tbody').on('click', '#filterBtn', function () {
 
-        // var data = courseTable.row($(this).parents('tr')).data();
-        // // var index = $(this).index(this);
+         var data = courseTable.row($(this).parents('tr')).data();
         var index = courseTable.row($(this).parents('tr')).index();
-        // console.log("data index " + data.index);
-        // show_student(index);
-                     //alert("index " + index);
 
-        // studentTableTitle.text("student in " + data[1]);
-        // alert("filter!");
-        console.log("$('#filterStudents').val():  " + $('#filterStudents').val());
-        if ($('#filterValue').val() != "" && $('#filterValue').val() != null) {
-            alert("filterValue " + $('#filterValue').val());
-
-            filter_student_1($('#filterStudents').val(), index);
-        } else {
-            filter_student_1(20, index);
-
-            alert("filter value is empty!");
-
-        }
+        GlobalTableIndexClick = index;
+        GlobalCourseNameClick = data[1];
+        GlobalTableDataClick = data;
+ 
     });
 
- 
+    $("#addCourseBtn").click(function () {
+
+        if ($('#course_name_addCourse').val() != null) {
+
+                var imageTag = '<img src="' + globalImgSrc + '" width="100">';
+
+           
+
+            courseTable.row.add([
+                "123456",
+                $('#course_name_addCourse').val(),
+                $('#start_date_addCourse').val(),
+                $('#end_date_addCourse').val(),
+                imageTag,
+                $('#totalL_addCourse').val(),
+                $('#totalS_addCourse').val(),
+                viewButtionTag,
+                filterButtionTag,
+                removeButtonTag,
+                editButtionTag
+            ]).draw(false);
+        }else{
+            alert("please fill in the information");
+        }
+   
+    });
+
+    $("#doFilterBtn").click(function () {
+
+        filter_student_1(20, GlobalTableDataClick);
+        
+
+    });
 
 
     courseTable.column(0).visible(false);
 
 });
+
+var globalImgSrc;
+function previewFile() {
+    console.log("previewFile");
+    var preview = document.querySelector('img'); //selects the query named img
+    // var preview =  $("#image_preview"); //selects the query named img
+    file = document.querySelector('input[type=file]').files[0]; //sames as here
+    reader = new FileReader();
+    // console.log("file: " + file);
+
+    reader.onloadend = function () {
+
+        $("#image_preview").attr("src", reader.result);
+        globalImgSrc = reader.result;
+    }
+
+    if (file) {
+        reader.readAsDataURL(file); //reads the data as a URL
+    } else {
+        preview.src = "";
+    }
+    console.log("getImage();" + getImage());
+
+
+
+}
 var courseTable = $('#dataTables-example').DataTable({
     responsive: true
 });;
@@ -132,12 +177,7 @@ coursesRef.on("child_added", snap => {
                     console.log("item.innerHTML: i" + item.innerHTML + " i " + i);
                     reset_class_list_student_table();
                     show_student(index);
-                    // if (confirm("you sure to remove record: " + item.innerHTML + " ? ")) {
-                    //     console.log("user confirmed!");
-                    //     remove(item.innerHTML);
-                    // } else {
-                    //     console.log("user not confirmed!");
-                    // }
+            
                 }
                 once++;
             });
@@ -156,20 +196,27 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
-function filter_student_1(number, index) {
+function filter_student_1(number, data) {
     studentTable.clear().draw();
-    var courseName = "Chinese Calligraphy(EVENT123510)";
-    if (index == 0) {
-        courseName = "Chinese Calligraphy(EVENT123510)"
-    } else {
-        courseName = "Fan Dancing(EVENT551489)"
+    //var courseName = "Chinese Calligraphy(EVENT123510)";
+    //if (index == 0) {
+    //    courseName = "Chinese Calligraphy(EVENT123510)"
+    //} else {
+    //    courseName = "Fan Dancing(EVENT551489)"
 
-    }
-    for (var index = 0; index < getRandomInt(1, 20); index++) {
+    //}
+    var courseName = data[1];
+    var totalLessons = parseInt(data[5]);
+    var totalStudents = parseInt(data[6]);
+    var number = totalLessons / 2;
+
+    for (var index = 0; index < getRandomInt(1, totalStudents); index++) {
         var studentNID = "Student" + getRandomInt(100, 300) + "(MEM" + getRandomInt(100, 300) + ")";
+        var att = getRandomInt(number, totalLessons);
+        var attPrecentage = att / totalLessons*100
         studentTable.row.add([
             studentNID, courseName,
-            getRandomInt(number, 30)+"/30"
+            att + "/" + totalLessons + " (" + attPrecentage.toFixed(1) + "%)"
         ]).draw(false);
 
     }
@@ -259,7 +306,6 @@ function add_student_table_fake(userId, student_attend_list) {
             image_real_url = url;
 
             var imageTag = '<img src="' + image_real_url + '" width="100">';
-            // var buttonTag = ' <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="viewBtn">view </button>';
 
             studentTable.row.add([
 

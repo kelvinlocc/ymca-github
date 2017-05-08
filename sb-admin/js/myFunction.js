@@ -4,9 +4,9 @@ var removeButtonTag = ' <button id="removeBtn" type="button" class="btn btn-dang
 
 var viewButtionTag = '<button id="viewBtn" type="button" class="btn btn-info">View Detail</button>';
 
-var editButtionTag = '<button id="editBtn" type="button" class="btn btn-info">edit</button>';
-var enrollButtionTag = '<button id="editBtn" type="button" class="btn btn-info">enroll</button>';
-var filterButtionTag = '<button id="filterBtn" type="button" class="btn btn-info">filter</button>';
+var editButtionTag = '<button id="editBtn" type="button" class="btn btn-info">Edit</button>';
+
+var filterButtionTag = '<button id="filterBtn" type="button" class="btn btn-info" data-toggle="modal" data-target="#filterModal">filter</button>';
 var inputFilterValueTag = '<input id = "filterValue" type="text" class="form-control" placeholder="attendance percentage"> ';
 function timeConverter(UNIX_timestamp) {
     var a = new Date(UNIX_timestamp * 1000);

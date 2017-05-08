@@ -6,6 +6,7 @@ var submitButton = document.getElementById("submitButton");
 var storage = firebase.storage();
 var storageRef = storage.ref();
 var tangRef = storageRef.child('images/news/fandance.jpg');
+var albumsRef = firebase.database().ref().child("Album");
 
 
 var timestamp = new Date().toLocaleDateString();
@@ -23,8 +24,6 @@ $(document).ready(function () {
         var index = newsTable.row($(this).parents('tr')).index();
         console.log("data index " + index);
 
-        // alert("index " + index + " " + data[1] + " " + data[5]);
-        // alert("key " + data[0]);
         if (confirm("are you sure to delete the news with title: " + data[1] + "?")) {
             remove_news(data[0]);
             newsTable.row($(this).parents('tr')).remove().draw();
@@ -33,11 +32,54 @@ $(document).ready(function () {
         }
     });
 
-$( "#myModal" ).hide();
-$( "#add_albums" ).click(function() {
-  alert( "Handler for .click() called.@#add_albums" );
-  $( "#myModal" ).show();
-})
+    $(document).on('change', "#albumSelect", function () {
+        //alert($(this).val());  // will display selected option's value
+        //alert($(this).find('option:selected').text()); //will display selected option's text
+        updateAlum($(this).val());
+        $("#albumsName").val($(this).find('option:selected').text());
+    });
+
+
+    $("#delete_albums").click(function () {
+        if (confirm("Confirm to delete?")) {
+            //alert("delete");
+        } else {
+            //alert("cancel");
+        }
+
+
+    })
+
+
+
+    $("#addAlbumBtn").click(function () {
+        var select = document.getElementById("albumSelect");
+
+        //alert('$("#newAlbumName").val()' + $("#newAlbumName").val());
+        var option = document.createElement('option');
+        //option.text = option.value = $("#newAlbumName").val();
+        //option.text = option.value = "123";
+        option.textContent = option.value = $("#newAlbumName").val();
+
+        select.appendChild(option);
+
+
+    })
+
+    function addAlbumSelectOption() {
+        var option = document.createElement('option');
+        //option.text = option.value = $("#newAlbumName").val();
+        option.text = option.value = "123";
+        $('#albumSelect').add(option, 0);
+    }
+
+    window.onload = function () {
+        alert(" window.onload");
+        var option = document.createElement('option');
+        //option.text = option.value = $("#newAlbumName").val();
+        option.text = option.value = "123";
+        $('#albumSelect').add(option, 0);
+    }
 
     $('#table_news tbody').on('click', '#editBtn', function () {
         var data = newsTable.row($(this).parents('tr')).data();
@@ -68,7 +110,75 @@ $( "#add_albums" ).click(function() {
 
 
 
+var Album_list = [];
+albumsRef.on("child_added", snap => {
+    console.log("albumsRef on");
+    var coverageRef = snap.child("coverStorageRefChild").val();
+    var dataString = snap.child("dateString").val();
+    var name = snap.child("name").val();
+    var imgRef = snap.child("storageRefChilds").val();
+    console.log("name " + name);
+    console.log("imgRef ", imgRef);
 
+    var new_data = {
+        "key": snap.key,
+        "dataString": dataString,
+        "name": name,
+        "imgRef": imgRef,
+    }
+
+    Album_list.push(new_data);
+    $('#albumSelect').val("0").change();
+    newsTable.column(0).visible(false);
+    newsTable.column(1).visible(false);
+    newsTable.column(2).visible(false);
+});
+
+function updateAlum(index) {
+    newsTable.clear().draw();
+    if (Album_list[index] == null) {
+        return;
+    }
+    if (Album_list[index].imgRef == null) {
+        return;
+    }
+    var obj = Album_list[index].imgRef;
+
+    var result = Object.keys(obj).map(function (e) {
+        return [String(e), obj[e]];
+    });
+    console.log("result ", result);
+    console.log("result " + result[1]);
+    console.log("result "+ result.length);
+    var imageList = result;
+    var str = imageList[1].toString();
+    var res = str.split(",");
+    console.log("res " + res[1]);
+
+    for (var i = 0; i < imageList.length; i++) {
+        var tangRef = storageRef.child(imageList[i].toString().split(",")[1]);
+
+        tangRef.getDownloadURL().then(function (url) {
+            image_real_url = url;
+            //console.log("url " + url);
+            var imageTag = '<img src="' + image_real_url + '" width="100">';
+            newsTable.row.add([
+                "123",
+                "",
+                "",
+                imageTag,
+                Album_list[index].dataString,
+                removeButtonTag,
+                //editButtionTag
+            ]).draw(false);
+        }).catch(function (error) {
+            console.error(error);
+        
+        });
+    }
+    
+
+}
 
 var newsTable = $('#table_news').DataTable({
     responsive: true,
@@ -76,15 +186,15 @@ var newsTable = $('#table_news').DataTable({
  
     pageResize: true,
 
-    dom: 'Blfrtip',
+    //dom: 'Blfrtip',
     
-    buttons: [{
-        text: 'upload image',
-        id:"add_albums",
-        action: function (e, dt, node, config) {
-            addNews();
-        }
-    }],
+    //buttons: [{
+    //    text: 'upload image',
+    //    id:"add_albums",
+    //    action: function (e, dt, node, config) {
+    //        addNews();
+    //    }
+    //}],
    
 
   
@@ -121,7 +231,6 @@ function getImage() {
         image_name = image_name.substring(lastIndex + 1);
     }
     return image_name;
-    console.log("image_name " + image_name);
 }
 var file;
 var reader;
@@ -156,54 +265,54 @@ var rootRef = firebase.database().ref();
 var newsRef = firebase.database().ref().child("News");
 var news_list = [];
 
-newsRef.on("child_added", snap => {
-    console.log("newsRef on ");
+//newsRef.on("child_added", snap => {
+//    console.log("newsRef on ");
 
 
 
-    var itermId = snap.key;
-    var title = snap.child("title").val();
-    var content = snap.child("content").val();
-    var storageRefChild = snap.child("storageRefChild").val();
-    var timestamp = snap.child("timestamp").val();
-    var tangRef = storageRef.child(storageRefChild);
-    var image_real_url;
+//    var itermId = snap.key;
+//    var title = snap.child("title").val();
+//    var content = snap.child("content").val();
+//    var storageRefChild = snap.child("storageRefChild").val();
+//    var timestamp = snap.child("timestamp").val();
+//    var tangRef = storageRef.child(storageRefChild);
+//    var image_real_url;
 
 
-    tangRef.getDownloadURL().then(function (url) {
-        image_real_url = url;
-        var imageTag = '<img src="' + image_real_url + '" width="100">';
-        newsTable.row.add([
-            itermId,
-            title,
-            content,
-            imageTag,
-            timeConverter(timestamp),
-            removeButtonTag,
-            editButtionTag
-        ]).draw(false);
+//    tangRef.getDownloadURL().then(function (url) {
+//        image_real_url = url;
+//        var imageTag = '<img src="' + image_real_url + '" width="100">';
+//        newsTable.row.add([
+//            itermId,
+//            title,
+//            content,
+//            imageTag,
+//            timeConverter(timestamp),
+//            removeButtonTag,
+//            editButtionTag
+//        ]).draw(false);
 
 
-        var new_data = {
-            "key": snap.key,
-            "title": title,
-            "content": content,
-            "timestamp": timestamp,
-            "image_real_url": image_real_url
-        }
-
-
-
-    }).catch(function (error) {
-        console.error(error);
-        // if (error != null) {
-        //     update_local_news_table();
-        // }
-    });
+//        var new_data = {
+//            "key": snap.key,
+//            "title": title,
+//            "content": content,
+//            "timestamp": timestamp,
+//            "image_real_url": image_real_url
+//        }
 
 
 
-});
+//    }).catch(function (error) {
+//        console.error(error);
+//        // if (error != null) {
+//        //     update_local_news_table();
+//        // }
+//    });
+
+
+
+//});
 
 
 function countTableRowLength(table_name) {
@@ -286,8 +395,6 @@ function editNews() {
     }
 
 }
-
-
 
 function upload_image(file) {
 
