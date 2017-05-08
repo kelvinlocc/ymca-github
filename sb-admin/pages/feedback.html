@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -38,49 +39,7 @@
 
 </head>
 
-<body style="overflow:hidden;">
-
-
-
-
-
-    <!--<a id="dummy" class="btn" data-popup-open="popup-1" href="#">Open Popup #1</a>-->
-
-    <div class="popup" data-popup="popup-1">
-        <div class="popup-inner">
-            <h2>create a news</h2>
-            <div>
-                <form role="form">
-                    <div class="form-group">
-                        <label>news title</label>
-                        <input id="news_title" class="form-control">
-                        <!--<p class="help-block">Example block-level help text here.</p>-->
-                    </div>
-                    <div class="form-group">
-                        <label>news content</label>
-                        <textarea id="news_content" placeholder="Enter text" class="form-control" rows="3"></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label>upload news image</label>
-                        <input type="file" id="upload_news_image" onchange="previewFile()">
-                        <img id="image_preview" width="100" src="" />
-                    </div>
-
-                    <!--<button type="submit"  onclick="createNews()" class="btn btn-default">Submit Button</button>-->
-                    <!--<button  onclick="createNews()" >Submit Button</button>-->
-                    <button type="reset" class="btn btn-default">Reset Button</button>
-                </form>
-                <button type="submit" onclick="createNews()" class="btn btn-default">Submit Button</button>
-
-            </div>
-            <!--<p><a data-popup-close="popup-1" href="#">Close</a></p>-->
-            <a class="popup-close" data-popup-close="popup-1" href="#">x</a>
-        </div>
-    </div>
-
-
-
+<body>
 
     <div id="wrapper">
 
@@ -93,9 +52,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-
                 <a class="navbar-brand" href="news.html">YWCA CMS</a>
-
             </div>
             <!-- /.navbar-header -->
 
@@ -103,9 +60,9 @@
                 <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
             </ul>
 
-
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
+
                     <ul class="nav" id="side-menu">
                         <li>
                             <a href="news.html"><i class="fa fa-file"></i> News </a>
@@ -114,36 +71,33 @@
                             <a href="attendence.html"><i class="fa fa-user"></i> Users </a>
                         </li>
                         <li>
-                            <a href="albums.html"><i class="fa fa-picture-o"></i> albums</a>
+                            <a href="albums.html"><i class="fa fa-picture-o"></i> Albums</a>
                         </li>
                         <li>
-                            <a href="class_list.html"><i class="fa fa-users"></i> class list</a>
+                            <a href="class_list.html"><i class="fa fa-users"></i> Class list</a>
                         </li>
                         <li>
-                            <a href="feedback.html"><i class="fa fa-envelope"></i> feedback list</a>
+                            <a href="feedback.html"><i class="fa fa-envelope"></i> Feedback list</a>
                         </li>
                         <li>
                             <a href="notifications.html"><i class="fa fa-bell"></i> Notifications</a>
                         </li>
                         <li>
-                            <a href="importData.html"><i class="fa fa-database"></i> import/export data</a>
+                            <a href="importData.html"><i class="fa fa-database"></i> Import/export data</a>
                         </li>
+
                     </ul>
+
                 </div>
                 <!-- /.sidebar-collapse -->
             </div>
-
-            <!-- /.navbar-static-side -->
         </nav>
+       
 
 
 
-
-
-
+        <!-- right side panel -->
         <div id="page-wrapper">
-
-
 
 
             <div class="row">
@@ -171,10 +125,7 @@
                                         <th>delete </th>
                                     </tr>
                                 </thead>
-
-                                <tbody>
-
-                                </tbody>
+                                <tbody></tbody>
                             </table>
                         </div>
                         <!-- /.panel-body -->
@@ -185,14 +136,89 @@
             </div>
 
 
-
-
         </div>
         <!-- /#page-wrapper -->
 
     </div>
     <!-- /#wrapper -->
+  
+    <div id="viewStudentModal" class="modal fade" role="dialog" >
+        <div class="modal-dialog" style="width:90%;">
 
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Students haven't read message:</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="panel-body">
+                        <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                            <thead>
+                                <tr>
+                                    <th>User Id</th>
+                                    <th>Chinese Name</th>
+                                    <th>English Name</th>
+                                    <th>Address</th>
+                                    <th>Birthday</th>
+                                    <th>Career</th>
+                                    <th>Education</th>
+                                    <th>Nation</th>
+                                    <th>Register Date</th>
+                                    <th>Status</th>
+                                    <th>Telephone</th>
+                                    <th>Urgent Contanct Name</th>
+                                    <th>Urgent Telephone</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>MEM1111</td>
+                                    <td>張XX</td>
+                                    <td>Cheung xxx xxx</td>
+                                    <td>Hong Kong</td>
+                                    <td>20/1/1970</td>
+                                    <td>retired</td>
+                                    <td>bachelor</td>
+                                    <td>Chinese</td>
+                                    <td>20/5/2017</td>
+                                    <td>single</td>
+                                    <td>9171 1244</td>
+                                    <td>Wong xx yy</td>
+                                    <td>92848861</td>
+                                </tr>
+
+                                <tr>
+                                    <td>MEM1112</td>
+                                    <td>陳XX</td>
+                                    <td>Chan xxx xxx</td>
+                                    <td>Hong Kong</td>
+                                    <td>11/12/1970</td>
+                                    <td>working</td>
+                                    <td>Secondary school</td>
+                                    <td>Chinese</td>
+                                    <td>12/7/2019</td>
+                                    <td>married</td>
+                                    <td>6123 3421</td>
+                                    <td>Kong xx yy</td>
+                                    <td>6152 8712</td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
     <!-- jQuery -->
     <script src="../vendor/jquery/jquery.min.js"></script>
 
@@ -204,33 +230,8 @@
 
     <!-- DataTables JavaScript -->
     <script src="../vendor/datatables/js/jquery.dataTables.min.js"></script>
-    <!--<script src="https://code.jquery.com/jquery-1.12.4.js"></script>-->
-
-    <!--// find-->
-
-    <script src="https://cdn.datatables.net/1.10.13/js/dataTables.jqueryui.min.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
-    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.24/build/pdfmake.min.js"></script>
-    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.24/build/vfs_fonts.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.print.min.js"></script>
-
-
-    <!--add a button inside the data table-->
-    <script src="https://cdn.datatables.net/buttons/1.2.4/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.flash.min.js"></script>
-
     <script src="../vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
     <script src="../vendor/datatables-responsive/dataTables.responsive.js"></script>
-
-
-    <!-- Custom Theme JavaScript -->
-    <script src="../dist/js/sb-admin-2.js"></script>
-
-    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-
-
     <script src="https://www.gstatic.com/firebasejs/3.7.5/firebase.js"></script>
     <script>
         // Initialize Firebase
@@ -244,36 +245,21 @@
         };
         firebase.initializeApp(config);
     </script>
-
-    <!--//-->
-
-    <!--<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <link href="https://nightly.datatables.net/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
-    <script src="https://nightly.datatables.net/js/jquery.dataTables.js"></script>-->
-
-    <link href="https://cdn.datatables.net/colreorder/1.2.0/css/colReorder.dataTables.css" rel="stylesheet" type="text/css" />
-    <!--<script src="https://cdn.datatables.net/colreorder/1.2.0/js/dataTables.colReorder.js"></script>-->
-
-
-    <link href="https://cdn.datatables.net/select/1.0.0/css/select.dataTables.css" rel="stylesheet" type="text/css" />
-    <!--<script src="https://cdn.datatables.net/select/1.0.0/js/dataTables.select.js"></script>-->
-    <!--<link href="https://cdn.datatables.net/fixedheader/3.0.0/css/fixedHeader.dataTables1.css" rel="stylesheet" type="text/css"/>-->
-
-    <!--<script src="https://cdn.datatables.net/fixedheader/3.0.0/js/dataTables.fixedHeader.js"></script>-->
-    <link href="https://cdn.datatables.net/buttons/1.0.1/css/buttons.dataTables.css" rel="stylesheet" type="text/css" />
-    <script src="https://cdn.datatables.net/buttons/1.0.1/js/dataTables.buttons.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.0.3/js/buttons.html5.min.js"></script>
-    <!--//-->
-
-    <!--script for model:-->
-    <!--<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">-->
-    <!--<link rel="stylesheet" href="/resources/demos/style.css">-->
-    <!--<script src="https://code.jquery.com/jquery-1.12.4.js"></script>-->
-    <!--<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>-->
-
+    <!-- Custom Theme JavaScript -->
+    <script src="../dist/js/sb-admin-2.js"></script>
     <script src="../js/myFunction.js"></script>
+
     <script src="../js/feedback.js"></script>
 
+
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+    <script>
+        $(document).ready(function () {
+            $('#dataTables-example').DataTable({
+                responsive: true
+            });
+        });
+    </script>
 
 </body>
 

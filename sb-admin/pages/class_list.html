@@ -52,38 +52,41 @@
                 <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
             </ul>
 
-          <div class="navbar-default sidebar" role="navigation">
-    <div class="sidebar-nav navbar-collapse">
-        <ul class="nav" id="side-menu">
-            <li>
-                <a href="news.html"><i class="fa fa-file"></i> News </a>
-            </li>
-            <li>
-                <a href="attendence.html"><i class="fa fa-user"></i> Users </a>
-            </li>
-            <li>
-                <a href="albums.html"><i class="fa fa-picture-o"></i> albums</a>
-            </li>
-            <li>
-                <a href="class_list.html"><i class="fa fa-users"></i> class list</a>
-            </li>
-            <li>
-                <a href="feedback.html"><i class="fa fa-envelope"></i> feedback list</a>
-            </li>
-            <li>
-                <a href="notification.html"><i class="fa fa-bell"></i> Notifications</a>
-            </li>
-            <li>
-                <a href="importData.html"><i class="fa fa-database"></i> import/export data</a>
-            </li>
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
 
-        </ul>
+                    <ul class="nav" id="side-menu">
+                        <li>
+                            <a href="news.html"><i class="fa fa-file"></i> News </a>
+                        </li>
+                        <li>
+                            <a href="attendence.html"><i class="fa fa-user"></i> Users </a>
+                        </li>
+                        <li>
+                            <a href="albums.html"><i class="fa fa-picture-o"></i> Albums</a>
+                        </li>
+                        <li>
+                            <a href="class_list.html"><i class="fa fa-users"></i> Class list</a>
+                        </li>
+                        <li>
+                            <a href="feedback.html"><i class="fa fa-envelope"></i> Feedback list</a>
+                        </li>
+                        <li>
+                            <a href="notifications.html"><i class="fa fa-bell"></i> Notifications</a>
+                        </li>
+                        <li>
+                            <a href="importData.html"><i class="fa fa-database"></i> Import/export data</a>
+                        </li>
 
-    </div>
-    <!-- /.sidebar-collapse -->
-</div>
+                    </ul>
 
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
         </nav>
+
+
+
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
@@ -95,11 +98,11 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div>
-                        <button id="add_albums" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#addCoursesModal">Add course</button>
+                        <button id="addClassBtn" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#addCoursesModal">Add Class</button>
                     </div><br>
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Courses table
+                            Class table
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -113,11 +116,10 @@
                                         <th>course image </th>
                                         <th>total lessons </th>
                                         <th>total students </th>
-                                        <th>view detail </th>
-                                        <th>filter option</th>
-                                        <th>delete </th>
+                                        <th>view Students </th>
+                                        <th>attendance reward</th>                                       
                                         <th>edit </th>
-                                        
+                                        <th>delete </th>
 
 
                                     </tr>
@@ -154,13 +156,7 @@
                                         <th>student name(student id ) </th>
                                         <th>courses </th>
                                         <th>attendances </th>
-                                        <!--<th>student image </th>-->
-                                        <!--<th>total lessons </th>
-                                        <th>total students </th>
-                                        <th>action </th>-->
-
-
-
+ 
                                     </tr>
                                 </thead>
 
@@ -190,7 +186,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Add Course</h4>
+                    <h4 class="modal-title">Add Class</h4>
                 </div>
                 <div class="modal-body">
 
@@ -202,7 +198,7 @@
                                     <input id="student_id_editForm2" class="form-control" placeholder="Enter text" readonly>
                                 </div>-->
                                 <div class="form-group">
-                                    <label>Course Name</label>
+                                    <label>Class Name</label>
                                     <input id="course_name_addCourse" class="form-control" placeholder="Enter text">
                                 </div>
                                 <div class="form-group">
@@ -219,17 +215,108 @@
                                     <br />
                                     <img id="image_preview" width="100" src="../img/default.jpg">
                                 </div>
+                                <div id="side_bar" class="clearfix">
+                                    <h2 style="float: left;">Session</h2>
+                                    <button type=button id="addSectionSend" class="btn btn-info" style="float: right; position: relative; top: 10px; right: 10px;" >Add Section</button>
+                                </div>
+                        
+
+                                <div class="panel-body">
+                                    <table  class="table table-striped table-bordered table-hover" id="class_section_table">
+                                        <thead>
+                                            <tr>
+                                                <th>Section</th>
+                                                <th>start Date</th>
+                                                <th>end Date</th>
+                                                <th>delete</th>
+                                                
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!--<tr>
+                                                <td>Section 1</td>
+                                                <th><input type="date" id="startDate" class="form-control" placeholder=""></th>
+                                                <th><input type="date" id="startDate" class="form-control" placeholder=""></th>
+
+                                                <td><button id="removeSection" type="button" class="btn btn-danger  btn-circle"><i class="fa fa-times"></i></button></td>
+                                            </tr>-->
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <button id="addCourseBtn" data-dismiss="modal" class="btn btn-primary">Add</button>
+                                <button type="reset" class="btn btn-warning">Reset input fields</button>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Modal for edit Course-->
+    <div id="editCoursesModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Edit Class</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form role="form">
+                                <!--<div class="form-group">
+                                    <label>Student ID</label>
+                                    <input id="student_id_editForm2" class="form-control" placeholder="Enter text" readonly>
+                                </div>-->
                                 <div class="form-group">
-                                    <label>Total Lessons</label>
-                                    <input id="totalL_addCourse" class="form-control" placeholder="Enter text">
+                                    <label>Class Name</label>
+                                    <input id="course_name_e" class="form-control" placeholder="Enter text">
                                 </div>
                                 <div class="form-group">
-                                    <label>Total Students</label>
-                                    <input type="number" id="totalS_addCourse" class="form-control" placeholder="Enter text">
+                                    <label>Start Date</label>
+                                    <input id="start_date_e" class="form-control" placeholder="Enter text">
+                                </div>
+                                <div class="form-group">
+                                    <label>End Date</label>
+                                    <input id="end_date_e" class="form-control" placeholder="Enter text">
+                                </div>
+                                <div class="form-group">
+                                    <label>Upload Image</label>
+                                    <input type="file" id="course_image_file" class="form-control" placeholder="" onchange="previewFile()">
+                                    <br />
+                                    <img id="image_preview" width="100" src="../img/default.jpg">
+                                </div>
+                                <div id="side_bar" class="clearfix">
+                                    <h2 style="float: left;">Session</h2>
+                                    <button type=button id="addSectionSend_e" class="btn btn-info" style="float: right; position: relative; top: 10px; right: 10px;">Add Section</button>
                                 </div>
 
-                       
 
+                                <div class="panel-body">
+                                    <table class="table table-striped table-bordered table-hover" id="class_section_table_edit">
+                                        <thead>
+                                            <tr>
+                                                <th>Section</th>
+                                                <th>start Date</th>
+                                                <th>end Date</th>
+                                                <th>delete</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        </tbody>
+                                    </table>
+                                </div>
                                 <button id="addCourseBtn" data-dismiss="modal" class="btn btn-primary">Add</button>
                                 <button type="reset" class="btn btn-warning">Reset input fields</button>
                             </form>

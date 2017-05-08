@@ -36,10 +36,11 @@ $(document).ready(function () {
 
 var feedbackTable = $('#table_feedback').DataTable({
     responsive: true,
-    //"autoWidth": false,
-    //scrollCollapse: true,
-    //dom: 'Blfrtip',
-    //buttons: ['csv', 'excel'],
+    pageResize: true,
+    colReorder: true,
+    "aLengthMenu": [[5,10,25, 50, 75, -1], [5,10,25, 50, 75, "All"]],
+
+    "iDisplayLength": 5,
     
 });
 

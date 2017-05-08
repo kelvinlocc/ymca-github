@@ -6,65 +6,211 @@ var storageRef = storage.ref();
 
 var GlobalTableIndexClick;
 var GlobalTableDataClick;
+var GlobalSectionNumber;
+var editButtionTag = '<button id="editBtn" type="button" class="btn btn-info" data-toggle="modal" data-target="#editCoursesModal">Edit</button>';
 
 $(document).ready(function () {
+    $('#dataTables-example tbody').off('click', 'tr').on('click', 'tr', function () {
+        if ($(this).hasClass('selected')) {
+            courseTable.$('tr.selected').removeClass('selected').css('background', '#167691').css('color', 'white');
+            $(this).removeClass('selected').css('background', '').css('color', '');
+            console.log("remove selected");
+            //$(this).addClass('selected').css('background', 'Aqua');
+            $(this).addClass('selected').css('background', '#167691').css('color', 'white');
+
+        }
+        else {
+            courseTable.$('tr.selected').removeClass('selected').css('background', '').css('color', '');
+            console.log($(this).text());
+            $(this).addClass('selected').css('background', '#167691').css('color', 'white');
+        }
+
+    });
 
     $('#dataTables-example tbody').on('click', '#viewBtn', function () {
         var data = courseTable.row($(this).parents('tr')).data();
         // var index = $(this).index(this);
         var index = courseTable.row($(this).parents('tr')).index();
         console.log("data[1] " + data[1]);
-        //show_student(index);
+        show_student(index, data);
 
         studentTableTitle.text("student in " + data[1]);
 
     });
 
+    $('#dataTables-example tbody').on('click', '#editBtn', function () {
+        var data = courseTable.row($(this).parents('tr')).data();
+        // var index = $(this).index(this);
+        var index = courseTable.row($(this).parents('tr')).index();
+        console.log("data[1] " + data[1]);
+        //show_student(index);
+        var data = class_list[index];
+        $('#course_name_e').val(data.name);
+        $('#start_date_e').val(data.startdate);
+        $("#image_preview").attr("src", data.imageSrc);
+
+        $('#end_date_e').val(data.endDate);
+        $('#course_name_e').val(data.name);
+        console.log("data.sectionArray ", data.sectionArray);
+        sectionEditTable.clear().draw();
+        if (data.sectionArray != null) {
+            for (var i = 0; i < data.sectionArray.length; i++) {
+                var section = data.sectionArray[i];
+                var inputTagS = '<input type="date" id="startDate" class="form-control" value="' + section.start_date+'">';
+                var inputTagE = '<input type="date" id="startDate" class="form-control" value="' + section.end_date+'">';
+
+                sectionEditTable.row.add([
+                    section.section_name,
+                    inputTagS, inputTagE, removeButtonTag
+
+                ]).draw(false);
+            }
+        }
+      
+     
+
+    });
+
     $('#dataTables-example tbody').on('click', '#filterBtn', function () {
 
-         var data = courseTable.row($(this).parents('tr')).data();
+        var data = courseTable.row($(this).parents('tr')).data();
         var index = courseTable.row($(this).parents('tr')).index();
 
         GlobalTableIndexClick = index;
         GlobalCourseNameClick = data[1];
         GlobalTableDataClick = data;
- 
+
     });
 
     $("#addCourseBtn").click(function () {
 
         if ($('#course_name_addCourse').val() != null) {
 
-                var imageTag = '<img src="' + globalImgSrc + '" width="100">';
+            var imageTag = '<img src="' + globalImgSrc + '" width="100">';
 
-           
+            var viewButtionTag = '<button id="viewBtn" type="button" class="btn btn-info">See all students</button>';
+            var sectionArray = [
+                {
+                    "section_name": "section 1", "start_date": "2016-11-11", "end_date": "2017-11-11"
+                },
+                //{
+                //    "section_name": "section 2", "start_date": "2016-09-11", "end_date": "2017-09-11"
+                //},
+                //{
+                //    "section_name": "section 3", "start_date": "2016-08-1", "end_date": "2017-08-11"
+                //},
+
+            ];
+            var new_data = {
+                "key": "EVENT872510",
+                "attendances": "",
+                "students": "",
+                "tutors": "",
+                "endDate": $('#end_date_addCourse').val(),
+                "name": $('#course_name_addCourse').val(),
+                "startdate": $('#start_date_addCourse').val(),
+                "storageRefChild": "",
+                "totalLessons": "1",
+                "totalStudents": "0",
+                "sectionArray": sectionArray,
+                "imageSrc": globalImgSrc,
+
+            }
+            class_list.push(new_data);
 
             courseTable.row.add([
                 "123456",
                 $('#course_name_addCourse').val(),
+                
                 $('#start_date_addCourse').val(),
                 $('#end_date_addCourse').val(),
                 imageTag,
-                $('#totalL_addCourse').val(),
-                $('#totalS_addCourse').val(),
+                "1",
+                "0",
                 viewButtionTag,
                 filterButtionTag,
+
+                editButtionTag,
                 removeButtonTag,
-                editButtionTag
             ]).draw(false);
-        }else{
+
+
+
+        } else {
             alert("please fill in the information");
         }
-   
+
     });
 
     $("#doFilterBtn").click(function () {
 
         filter_student_1(20, GlobalTableDataClick);
-        
+
 
     });
 
+    $("#addClassBtn").click(function () {
+        sectionTable.clear().draw();
+        GlobalSectionNumber = 0;
+
+    });
+
+    $("#addSectionSend").click(function () {
+
+        var inputTag = '<input type="date" id="startDate" class="form-control" placeholder="">';
+        GlobalSectionNumber++;
+        sectionTable.row.add([
+            "Section " + GlobalSectionNumber,
+            inputTag,
+            inputTag,
+            removeButtonTag,
+        ]).draw(false);
+
+    });
+
+
+    $("#addSectionSend_e").click(function () {
+
+        var inputTag = '<input type="date" id="startDate" class="form-control" placeholder="">';
+        GlobalSectionNumber++;
+        sectionEditTable.row.add([
+            "Section " + GlobalSectionNumber,
+            inputTag,
+            inputTag,
+            removeButtonTag,
+        ]).draw(false);
+
+    });
+
+
+
+    $('#class_section_table tbody').on('click', '#removeBtn', function () {
+        var data = sectionTable.row($(this).parents('tr')).data();
+        // var index = $(this).index(this);
+        var index = sectionTable.row($(this).parents('tr')).index();
+        console.log("data index " + index);
+
+        if (confirm("are you sure to delete ?")) {
+
+            sectionTable.row($(this).parents('tr')).remove().draw();
+        } else {
+            console.log("deletion cancelled!");
+        }
+    });
+
+    $('#class_section_table_edit tbody').on('click', '#removeBtn', function () {
+        var data = sectionEditTable.row($(this).parents('tr')).data();
+        // var index = $(this).index(this);
+        var index = sectionEditTable.row($(this).parents('tr')).index();
+        console.log("data index " + index);
+
+        if (confirm("are you sure to delete ?")) {
+
+            sectionEditTable.row($(this).parents('tr')).remove().draw();
+        } else {
+            console.log("deletion cancelled!");
+        }
+    });
 
     courseTable.column(0).visible(false);
 
@@ -101,6 +247,22 @@ var courseTable = $('#dataTables-example').DataTable({
 var studentTable = $('#student_table').DataTable({
     responsive: true
 });;
+var sectionTable = $('#class_section_table').DataTable({
+    responsive: true,
+    "searching": false,
+    "bLengthChange": false,
+
+
+});;
+//class_section_table_edit
+var sectionEditTable = $('#class_section_table_edit').DataTable({
+    responsive: true,
+    "searching": false,
+    "bLengthChange": false,
+
+
+});;
+
 
 var class_list = [];
 
@@ -122,18 +284,32 @@ coursesRef.on("child_added", snap => {
     var tangRef = storageRef.child(storageRefChild);
 
 
+    var sectionArray = [
+        {
+            "section_name": "section 1", "start_date": "2016-11-11", "end_date": "2017-11-11"
+        },
+        {
+            "section_name": "section 2", "start_date": "2016-09-11", "end_date": "2017-09-11"
+        },
+        {
+            "section_name": "section 3", "start_date": "2016-08-11", "end_date": "2017-08-11"
+        },
 
+    ];
     var new_data = {
         "key": snap.key,
         "attendances": attendances,
         "students": students,
         "tutors": tutors,
-        "endDate": endDate,
+        "endDate": timeConverter(endDate),
         "name": name,
-        "startdate": startdate,
+        "startdate": timeConverter(startdate),
         "storageRefChild": storageRefChild,
         "totalLessons": totalLessons,
-        "totalStudents": totalStudents
+        "totalStudents": totalStudents,
+        "sectionArray": sectionArray,
+        "imageSrc": "",
+
     }
 
     class_list.push(new_data);
@@ -144,6 +320,7 @@ coursesRef.on("child_added", snap => {
         console.log("get image! url: " + url);
         image_real_url = url;
         var imageTag = '<img src="' + image_real_url + '" width="100">';
+        var viewButtionTag = '<button id="viewBtn" type="button" class="btn btn-info">See all students</button>';
 
         courseTable.row.add([
             snap.key,
@@ -155,8 +332,9 @@ coursesRef.on("child_added", snap => {
             totalStudents + "0",
             viewButtionTag,
             filterButtionTag,
+
+            editButtionTag,
             removeButtonTag,
-            editButtionTag
         ]).draw(false);
 
 
@@ -177,7 +355,7 @@ coursesRef.on("child_added", snap => {
                     console.log("item.innerHTML: i" + item.innerHTML + " i " + i);
                     reset_class_list_student_table();
                     show_student(index);
-            
+
                 }
                 once++;
             });
@@ -213,7 +391,7 @@ function filter_student_1(number, data) {
     for (var index = 0; index < getRandomInt(1, totalStudents); index++) {
         var studentNID = "Student" + getRandomInt(100, 300) + "(MEM" + getRandomInt(100, 300) + ")";
         var att = getRandomInt(number, totalLessons);
-        var attPrecentage = att / totalLessons*100
+        var attPrecentage = att / totalLessons * 100
         studentTable.row.add([
             studentNID, courseName,
             att + "/" + totalLessons + " (" + attPrecentage.toFixed(1) + "%)"
@@ -223,8 +401,34 @@ function filter_student_1(number, data) {
 
 }
 
+function show_student(index,data) {
+    studentTable.clear().draw();
+    //var courseName = "Chinese Calligraphy(EVENT123510)";
+    //if (index == 0) {
+    //    courseName = "Chinese Calligraphy(EVENT123510)"
+    //} else {
+    //    courseName = "Fan Dancing(EVENT551489)"
 
-function show_student(index) {
+    //}
+    var courseName = data[1];
+    var totalLessons = parseInt(data[5]);
+    var totalStudents = parseInt(data[6]);
+    var number = totalLessons / 5;
+
+    for (var index = 0; index < totalStudents; index++) {
+        var studentNID = "Student" + getRandomInt(100, 300) + "(MEM" + getRandomInt(100, 300) + ")";
+        var att = getRandomInt(number, totalLessons);
+        var attPrecentage = att / totalLessons * 100
+        studentTable.row.add([
+            studentNID, courseName,
+            att + "/" + totalLessons + " (" + attPrecentage.toFixed(1) + "%)"
+        ]).draw(false);
+
+    }
+}
+
+
+function show_student_2(index) {
     console.log("show_student");
     //class_list[index]
 

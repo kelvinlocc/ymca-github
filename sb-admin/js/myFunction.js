@@ -6,7 +6,7 @@ var viewButtionTag = '<button id="viewBtn" type="button" class="btn btn-info">Vi
 
 var editButtionTag = '<button id="editBtn" type="button" class="btn btn-info">Edit</button>';
 
-var filterButtionTag = '<button id="filterBtn" type="button" class="btn btn-info" data-toggle="modal" data-target="#filterModal">filter</button>';
+var filterButtionTag = '<button id="filterBtn" type="button" class="btn btn-info" data-toggle="modal" data-target="#filterModal">view</button>';
 var inputFilterValueTag = '<input id = "filterValue" type="text" class="form-control" placeholder="attendance percentage"> ';
 function timeConverter(UNIX_timestamp) {
     var a = new Date(UNIX_timestamp * 1000);

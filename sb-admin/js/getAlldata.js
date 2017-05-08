@@ -60,23 +60,44 @@ usersRef.on("child_added", snap => {
         "attendances": attendances,
         "name": name,
         "storageRefChild": storageRefChild,
-        "Courses": Courses
+        "Courses": Courses,
+        "ChName": snap.child("ChName").val(),
+        "EngName": snap.child("EngName").val(),
+        "address": snap.child("address").val(),
+        "birthdate": snap.child("birthdate").val(),
+        "career": snap.child("career").val(),
+        "education": snap.child("education").val(),
+        "isTutor": snap.child("isTutor").val(),
+        "nation": snap.child("nation").val(),
+        "registerDate": snap.child("registerDate").val(),
+        "religion": snap.child("religion").val(),
+        "sex": snap.child("sex").val(),
+        "status": snap.child("status").val(),
+        "tel": snap.child("tel").val(),
+        "token": snap.child("token").val(),
+        "urgentContactName": snap.child("urgentContactName").val(),
+        "urgentTel": snap.child("urgentTel").val(),
+   
+
     }
 
     user_list.push(new_data);
     var editUserButtonTag = '<button id="editUserBtn" type="button" class="btn btn-info" data-toggle="modal" data-target="#editUserModal">Edit</button>';
     var enrollButtionTag = '<button id="enrollBtn" type="button" class="btn btn-info"  data-toggle="modal" data-target="#enrollCoursesModal">Enroll</button>';
-    var viewButtionTag = '<button id="viewBtn" type="button" class="btn btn-info">View Detail</button>';
+    var viewButtionTag = '<button id="viewBtn" type="button" class="btn btn-info">View</button>';
     var removeButtonTag = ' <button id="removeBtn" type="button" class="btn btn-danger  btn-circle"><i class="fa fa-times"></i></button>';
+    var viewDetailButtionTag = '<button id="viewDetailBtn" type="button" class="btn btn-info" data-toggle="modal" data-target="#viewDetailModel">View</button>';
+
 
     attendanceTable.row.add([
         new_data.key,
         new_data.name,
+        viewDetailButtionTag,
         viewButtionTag,
-        removeButtonTag,
+       
         editUserButtonTag,
         enrollButtionTag,
-    
+        removeButtonTag,
 
     ]).draw(false);
 

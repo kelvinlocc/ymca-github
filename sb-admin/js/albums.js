@@ -15,17 +15,45 @@ var myIndex;
 var myNewsData = [];
 $(document).ready(function () {
     //your code here
+    var newsTable = $('#albums_table').DataTable({
+        responsive: true,
+        "autoWidth": false,
+        "searching": false,
+        pageResize: true,
+        processing: true,
+        colReorder: true,
+        "aLengthMenu": [[5, 10, 25, 50, 75, -1], [5, 10, 25, 50, 75, "All"]],
 
-    $("#dummy").hide();
+        "iDisplayLength": 75,
+    });
+
+    $('#albums_table tbody').off('click', 'tr').on('click', 'tr', function () {
+        if ($(this).hasClass('selected')) {
+            newsTable.$('tr.selected').removeClass('selected').css('background', '#167691').css('color', 'white');
+            $(this).removeClass('selected').css('background', '').css('color', '');
+            console.log("remove selected");
+            //$(this).addClass('selected').css('background', 'Aqua');
+            $(this).addClass('selected').css('background', '#167691').css('color', 'white');
+
+        }
+        else {
+            newsTable.$('tr.selected').removeClass('selected').css('background', '').css('color', '');
+            console.log($(this).text());
+            $(this).addClass('selected').css('background', '#167691').css('color', 'white');
+        }
+
+    });
+
+
     $("#news_timeStamp").text(timestamp);
-    $('#table_news tbody').on('click', '#removeBtn', function () {
+    $('#albums_table tbody').on('click', '#removeBtn', function () {
         var data = newsTable.row($(this).parents('tr')).data();
         // var index = $(this).index(this);
         var index = newsTable.row($(this).parents('tr')).index();
         console.log("data index " + index);
 
-        if (confirm("are you sure to delete the news with title: " + data[1] + "?")) {
-            remove_news(data[0]);
+        if (confirm("are you sure to delete ?")) {
+            
             newsTable.row($(this).parents('tr')).remove().draw();
         } else {
             console.log("deletion cancelled!");
@@ -50,6 +78,24 @@ $(document).ready(function () {
 
     })
 
+    $("#UploadImgBtn").click(function () {
+
+        //console.log("url " + url);
+        var removeButtonTag = ' <button id="removeBtn" type="button" class="btn btn-danger  btn-circle"><i class="fa fa-times"></i></button>';
+        var imageTag = '<img src="' + reader.result + '" width="100">';
+        newsTable.row.add([
+            //"123",
+            //"",
+            //"",
+            imageTag,
+            //Album_list[index].dataString,
+            removeButtonTag,
+            //editButtionTag
+        ]).draw(false);
+
+
+    })
+
 
 
     $("#addAlbumBtn").click(function () {
@@ -59,7 +105,7 @@ $(document).ready(function () {
         var option = document.createElement('option');
         //option.text = option.value = $("#newAlbumName").val();
         //option.text = option.value = "123";
-        option.textContent = option.value = $("#newAlbumName").val();
+        option.textContent = option.value = "(2017.5.9) "+$("#newAlbumName").val();
 
         select.appendChild(option);
 
@@ -81,7 +127,7 @@ $(document).ready(function () {
         $('#albumSelect').add(option, 0);
     }
 
-    $('#table_news tbody').on('click', '#editBtn', function () {
+    $('#albums_table tbody').on('click', '#editBtn', function () {
         var data = newsTable.row($(this).parents('tr')).data();
         // var index = $(this).index(this);
         var index = newsTable.row($(this).parents('tr')).index();
@@ -103,9 +149,49 @@ $(document).ready(function () {
         myIndex = index;
 
     });
-    newsTable.column(0).visible(false);
-    newsTable.column(1).visible(false);
-    newsTable.column(2).visible(false);
+
+    function updateAlum(index) {
+        newsTable.clear().draw();
+        if (Album_list[index] == null) {
+            return;
+        }
+        if (Album_list[index].imgRef == null) {
+            return;
+        }
+        var obj = Album_list[index].imgRef;
+
+        var result = Object.keys(obj).map(function (e) {
+            return [String(e), obj[e]];
+        });
+        console.log("result ", result);
+        console.log("result " + result[1]);
+        console.log("result " + result.length);
+        var imageList = result;
+        var str = imageList[1].toString();
+        var res = str.split(",");
+        console.log("res " + res[1]);
+
+        for (var i = 0; i < imageList.length; i++) {
+            var tangRef = storageRef.child(imageList[i].toString().split(",")[1]);
+            var removeButtonTag = ' <button id="removeBtn" type="button" class="btn btn-danger  btn-circle"><i class="fa fa-times"></i></button>';
+
+            tangRef.getDownloadURL().then(function (url) {
+                image_real_url = url;
+                //console.log("url " + url);
+                var imageTag = '<img src="' + image_real_url + '" width="100">';
+                newsTable.row.add([
+                    imageTag,
+                    removeButtonTag,
+                ]).draw(true);
+            }).catch(function (error) {
+                console.error(error);
+
+            });
+        }
+
+
+    }
+
 });
 
 
@@ -129,95 +215,15 @@ albumsRef.on("child_added", snap => {
 
     Album_list.push(new_data);
     $('#albumSelect').val("0").change();
-    newsTable.column(0).visible(false);
-    newsTable.column(1).visible(false);
-    newsTable.column(2).visible(false);
+
 });
 
-function updateAlum(index) {
-    newsTable.clear().draw();
-    if (Album_list[index] == null) {
-        return;
-    }
-    if (Album_list[index].imgRef == null) {
-        return;
-    }
-    var obj = Album_list[index].imgRef;
 
-    var result = Object.keys(obj).map(function (e) {
-        return [String(e), obj[e]];
-    });
-    console.log("result ", result);
-    console.log("result " + result[1]);
-    console.log("result "+ result.length);
-    var imageList = result;
-    var str = imageList[1].toString();
-    var res = str.split(",");
-    console.log("res " + res[1]);
 
-    for (var i = 0; i < imageList.length; i++) {
-        var tangRef = storageRef.child(imageList[i].toString().split(",")[1]);
-
-        tangRef.getDownloadURL().then(function (url) {
-            image_real_url = url;
-            //console.log("url " + url);
-            var imageTag = '<img src="' + image_real_url + '" width="100">';
-            newsTable.row.add([
-                "123",
-                "",
-                "",
-                imageTag,
-                Album_list[index].dataString,
-                removeButtonTag,
-                //editButtionTag
-            ]).draw(false);
-        }).catch(function (error) {
-            console.error(error);
-        
-        });
-    }
-    
-
-}
-
-var newsTable = $('#table_news').DataTable({
-    responsive: true,
-    "autoWidth": false,
- 
-    pageResize: true,
-
-    //dom: 'Blfrtip',
-    
-    //buttons: [{
-    //    text: 'upload image',
-    //    id:"add_albums",
-    //    action: function (e, dt, node, config) {
-    //        addNews();
-    //    }
-    //}],
-   
-
-  
-    colReorder: true,
-});
 
   
 
-function addNews() {
-    console.log("addNews ");
-    // resizeElementHeight(newsTable);
-    // update();
-    // $("#table_news").height($(window).height());
-    $('[data-popup-open]').click();
-    $('#submit_news').show();
-    $('#edit_news').hide();
-    $('#createEditNews').val("create a news");
-    $('#news_title').val("");
-    $('#news_content').val("");
-    $("#image_preview").attr("src", "");
 
-
-}
 
 
 
@@ -245,7 +251,7 @@ function previewFile() {
 
     reader.onloadend = function () {
         // preview.src = reader.result;
-        console.log("reader.result " + reader.result);
+        //console.log("reader.result " + reader.result);
         $("#image_preview").attr("src", reader.result);
 
     }
@@ -265,55 +271,6 @@ var rootRef = firebase.database().ref();
 var newsRef = firebase.database().ref().child("News");
 var news_list = [];
 
-//newsRef.on("child_added", snap => {
-//    console.log("newsRef on ");
-
-
-
-//    var itermId = snap.key;
-//    var title = snap.child("title").val();
-//    var content = snap.child("content").val();
-//    var storageRefChild = snap.child("storageRefChild").val();
-//    var timestamp = snap.child("timestamp").val();
-//    var tangRef = storageRef.child(storageRefChild);
-//    var image_real_url;
-
-
-//    tangRef.getDownloadURL().then(function (url) {
-//        image_real_url = url;
-//        var imageTag = '<img src="' + image_real_url + '" width="100">';
-//        newsTable.row.add([
-//            itermId,
-//            title,
-//            content,
-//            imageTag,
-//            timeConverter(timestamp),
-//            removeButtonTag,
-//            editButtionTag
-//        ]).draw(false);
-
-
-//        var new_data = {
-//            "key": snap.key,
-//            "title": title,
-//            "content": content,
-//            "timestamp": timestamp,
-//            "image_real_url": image_real_url
-//        }
-
-
-
-//    }).catch(function (error) {
-//        console.error(error);
-//        // if (error != null) {
-//        //     update_local_news_table();
-//        // }
-//    });
-
-
-
-//});
-
 
 function countTableRowLength(table_name) {
 
@@ -326,75 +283,6 @@ function countTableRowLength(table_name) {
 
 
 
-function createNews() {
-    console.log("createNews()");
-    var timestamp = Math.round((new Date()).getTime() / 1000);
-    // var timestamp = new Date().getTime();
-    // Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-    console.log("timestamp " + timestamp);
-    console.log("timestamp timeConverter " + timeConverter(timestamp));
-
-    var title = $("#news_title").val();
-    var content = $("#news_content").val();
-    var newStoreRef = rootRef.child("News").push();
-    if (title == "" || content == "") {
-        alert("title or content is empty!");
-        return;
-    }
-    console.log("newStoreRef " + newStoreRef.key);
-    newStoreRef.set({
-        "title": title,
-        "content": content,
-        "storageRefChild": "images/news/" + getImage(),
-        "timestamp": timestamp
-    })
-
-    //get data for local:
-    new_news_data = {
-        "itemId": newStoreRef.key,
-        "title": title,
-        "content": content,
-        "storageRefChild": "images/news/" + getImage(),
-        "timestamp": timestamp
-    }
-
-
-    if (file != null) {
-        console.log("file not null");
-        upload_image(file);
-
-    } else {
-        console.log("file is null");
-        alert("no image!");
-    }
-
-}
-
-function editNews() {
-    console.log("editNews()");
-    var timestamp = Math.round((new Date()).getTime() / 1000);
-    // var timestamp = new Date().getTime();
-    // Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-    console.log("timestamp " + timestamp);
-    console.log("timestamp timeConverter " + timeConverter(timestamp));
-
-
-    var title = $("#news_title").val();
-    var content = $("#news_content").val();
-
-    myNewsData[1] = title;
-    myNewsData[2] = content;
-    var imageTag = '<img src="' + reader.result + '" width="100">';
-    myNewsData[3] = imageTag;
-    myNewsData[4] = timeConverter(timestamp);
-
-    if (myIndex != "") {
-        newsTable.row(myIndex).data(myNewsData).draw();
-        $('[data-popup-close]').click();
-
-    }
-
-}
 
 function upload_image(file) {
 

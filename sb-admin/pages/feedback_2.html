@@ -1,5 +1,4 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -39,12 +38,54 @@
 
 </head>
 
-<body>
+<body style="overflow:hidden;">
+
+
+
+
+
+    <!--<a id="dummy" class="btn" data-popup-open="popup-1" href="#">Open Popup #1</a>-->
+
+    <div class="popup" data-popup="popup-1">
+        <div class="popup-inner">
+            <h2>create a news</h2>
+            <div>
+                <form role="form">
+                    <div class="form-group">
+                        <label>news title</label>
+                        <input id="news_title" class="form-control">
+                        <!--<p class="help-block">Example block-level help text here.</p>-->
+                    </div>
+                    <div class="form-group">
+                        <label>news content</label>
+                        <textarea id="news_content" placeholder="Enter text" class="form-control" rows="3"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>upload news image</label>
+                        <input type="file" id="upload_news_image" onchange="previewFile()">
+                        <img id="image_preview" width="100" src="" />
+                    </div>
+
+                    <!--<button type="submit"  onclick="createNews()" class="btn btn-default">Submit Button</button>-->
+                    <!--<button  onclick="createNews()" >Submit Button</button>-->
+                    <button type="reset" class="btn btn-default">Reset Button</button>
+                </form>
+                <button type="submit" onclick="createNews()" class="btn btn-default">Submit Button</button>
+
+            </div>
+            <!--<p><a data-popup-close="popup-1" href="#">Close</a></p>-->
+            <a class="popup-close" data-popup-close="popup-1" href="#">x</a>
+        </div>
+    </div>
+
+
+
 
     <div id="wrapper">
 
         <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-static-top" role="navigation" >
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
@@ -92,43 +133,45 @@
                 <!-- /.sidebar-collapse -->
             </div>
         </nav>
-       
 
 
 
-        <!-- right side panel -->
+
 
         <div id="page-wrapper">
 
 
+
+
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">News</h1>
+                    <h1 class="page-header">feedback</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row the class list table -->
-            <div class="row" id="table-scroll" >
+            <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            news table
+                            feedback table
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                            <table  class="table table-striped table-bordered table-hover" id="table_news">
+                            <table width="100%" class="table table-striped table-bordered table-hover" cellspacing="0" id="table_feedback">
                                 <thead>
                                     <tr>
-                                        <td>news id</td>
-                                        <td>tile</td>
-                                        <td>content</td>
-                                        <td>cover</td>
-                                        <td>post date</td>
+                                        <!--<th>itemId</th>-->
+                                        <th>user</th>
+                                        <th>feedback</th>
+                                        <th>time stamp</th>
                                         <th>delete </th>
-                                        <th>edit </th>
                                     </tr>
                                 </thead>
 
+                                <tbody>
+
+                                </tbody>
                             </table>
                         </div>
                         <!-- /.panel-body -->
@@ -137,56 +180,16 @@
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <div id="footer">
 
-                <div id="footernotes">
-                </div>
-            </div>
-            <!-- end #footer -->
+
+
+
         </div>
         <!-- /#page-wrapper -->
 
     </div>
     <!-- /#wrapper -->
-    <!-- model for add ablums -->
-    <div id="addAlbumsModal" class="modal fade" role="dialog" style="display: none;">
-        <div class="modal-dialog">
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">×</button>
-                    <h4 class="modal-title">Add Albums</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <form role="form">
-                                <div class="form-group">
-                                    <label>Albums Name</label>
-                                    <input id="newAlbumName" class="form-control" placeholder="Enter text" value="">
-                                </div>
 
-                                <button id="addAlbumBtn" data-dismiss="modal" class="btn btn-primary">Add</button>
-                                <button type="reset" class="btn btn-warning">Reset input fields</button>
-                            </form>
-                        </div>
-                    </div>
-                    <!-- /.row (nested) -->
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-  
     <!-- jQuery -->
     <script src="../vendor/jquery/jquery.min.js"></script>
 
@@ -198,8 +201,33 @@
 
     <!-- DataTables JavaScript -->
     <script src="../vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <!--<script src="https://code.jquery.com/jquery-1.12.4.js"></script>-->
+
+    <!--// find-->
+
+    <script src="https://cdn.datatables.net/1.10.13/js/dataTables.jqueryui.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.24/build/pdfmake.min.js"></script>
+    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.24/build/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.print.min.js"></script>
+
+
+    <!--add a button inside the data table-->
+    <script src="https://cdn.datatables.net/buttons/1.2.4/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.flash.min.js"></script>
+
     <script src="../vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
     <script src="../vendor/datatables-responsive/dataTables.responsive.js"></script>
+
+
+    <!-- Custom Theme JavaScript -->
+    <script src="../dist/js/sb-admin-2.js"></script>
+
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+
+
     <script src="https://www.gstatic.com/firebasejs/3.7.5/firebase.js"></script>
     <script>
         // Initialize Firebase
@@ -213,15 +241,36 @@
         };
         firebase.initializeApp(config);
     </script>
-    <!-- Custom Theme JavaScript -->
-    <script src="../dist/js/sb-admin-2.js"></script>
+
+    <!--//-->
+
+    <!--<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <link href="https://nightly.datatables.net/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
+    <script src="https://nightly.datatables.net/js/jquery.dataTables.js"></script>-->
+
+    <link href="https://cdn.datatables.net/colreorder/1.2.0/css/colReorder.dataTables.css" rel="stylesheet" type="text/css" />
+    <!--<script src="https://cdn.datatables.net/colreorder/1.2.0/js/dataTables.colReorder.js"></script>-->
+
+
+    <link href="https://cdn.datatables.net/select/1.0.0/css/select.dataTables.css" rel="stylesheet" type="text/css" />
+    <!--<script src="https://cdn.datatables.net/select/1.0.0/js/dataTables.select.js"></script>-->
+    <!--<link href="https://cdn.datatables.net/fixedheader/3.0.0/css/fixedHeader.dataTables1.css" rel="stylesheet" type="text/css"/>-->
+
+    <!--<script src="https://cdn.datatables.net/fixedheader/3.0.0/js/dataTables.fixedHeader.js"></script>-->
+    <link href="https://cdn.datatables.net/buttons/1.0.1/css/buttons.dataTables.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.datatables.net/buttons/1.0.1/js/dataTables.buttons.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.0.3/js/buttons.html5.min.js"></script>
+    <!--//-->
+
+    <!--script for model:-->
+    <!--<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">-->
+    <!--<link rel="stylesheet" href="/resources/demos/style.css">-->
+    <!--<script src="https://code.jquery.com/jquery-1.12.4.js"></script>-->
+    <!--<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>-->
+
     <script src="../js/myFunction.js"></script>
-    <script src="../js/news.js"></script>
+    <script src="../js/feedback.js"></script>
 
-
-
-    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
- 
 
 </body>
 

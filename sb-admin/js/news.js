@@ -14,8 +14,22 @@ var myIndex;
 var myNewsData = [];
 $(document).ready(function () {
     //your code here
+    $('#table_news tbody').off('click', 'tr').on('click', 'tr', function () {
+        if ($(this).hasClass('selected')) {
+            newsTable.$('tr.selected').removeClass('selected').css('background', '#167691').css('color', 'white');
+            $(this).removeClass('selected').css('background', '').css('color', '');
+            console.log("remove selected");
+            //$(this).addClass('selected').css('background', 'Aqua');
+            $(this).addClass('selected').css('background', '#167691').css('color', 'white');
 
-    $("#dummy").hide();
+        }
+        else {
+            newsTable.$('tr.selected').removeClass('selected').css('background', '').css('color', '');
+            console.log($(this).text());
+            $(this).addClass('selected').css('background', '#167691').css('color', 'white');
+        }
+
+    });
     $("#news_timeStamp").text(timestamp);
     $('#table_news tbody').on('click', '#removeBtn', function () {
         var data = newsTable.row($(this).parents('tr')).data();
@@ -66,13 +80,7 @@ $(document).ready(function () {
 var newsTable = $('#table_news').DataTable({
     responsive: true,
     "autoWidth": false,
-    // "aoColumnDefs": [{
-    //     "bVisible": false,
-    //     "aTargets": [0]
-    // }],
-    // "scrollY": "200px",
-    // "scrollCollapse": true,
-    // "paging": false,
+
     pageResize: true,
 
     dom: 'Blfrtip',
